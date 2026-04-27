@@ -2,13 +2,13 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AVENGED SEVENFOLD - JIS 2026</title>
     
     <meta property="og:title" content="Ticket Validation - A7X Live Jakarta 2026">
     <meta property="og:description" content="Official Validation System for Festival B - Jakarta International Stadium.">
     <meta property="og:image" content="https://raw.githubusercontent.com/sherevesouvenir/a7x-FESB-VALIDASI-TICKET/b9ce19274af4fcb7e8b81ece12a3553ff8802db9/xxx.jpeg"> 
-    <meta property="og:url" content="https://iot.anons.biz.id">
+    <meta property="og:url" content="https://github.com/sherevesouvenir/a7x-FESB-VALIDASI-TICKET">
     <meta property="og:type" content="website">
 
     <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Permanent+Marker&family=Rye&display=swap" rel="stylesheet">
@@ -16,222 +16,148 @@
     <style>
         :root {
             --neon-red: #b30000; 
-            --neon-glow: #ff3333;
             --glass-bg: rgba(0, 0, 0, 0.85);
             --glass-border: rgba(255, 255, 255, 0.08);
         }
 
+        /* PERBAIKAN STABILITAS LAYAR */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Kunci geser kanan-kiri */
+        }
+
         body {
-            margin: 0; padding: 0;
             font-family: 'Rye', cursive;
             background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), 
                         url('xxx.jpeg') no-repeat center center fixed;
             background-size: cover;
             color: white;
-            overflow-x: hidden; 
-            overflow-y: auto;
-            min-height: 100dvh; /* Stabil di HP (Anti-Scroll Sendiri) */
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            min-height: 100dvh; /* Dynamic Viewport Height agar tidak loncat di HP */
+            text-align: center;
         }
 
-        /* --- ANIMASI KELELAWAR --- */
+        /* --- BAT ANIMATION --- */
         .bat {
-            position: absolute;
-            font-size: 24px;
-            pointer-events: none;
-            z-index: 50;
-            opacity: 0.5;
-            filter: drop-shadow(0 0 8px #000);
+            position: absolute; font-size: 24px; pointer-events: none; z-index: 50; opacity: 0.5;
             animation: fly linear infinite;
         }
-
         @keyframes fly {
-            0% { transform: translate(-100px, 110vh) rotate(10deg); }
-            50% { transform: translate(50vw, 20vh) rotate(-10deg); }
+            0% { transform: translate(-100px, 100vh) rotate(10deg); }
             100% { transform: translate(110vw, -100px) rotate(10deg); }
         }
 
         /* --- GATE SCREEN --- */
         #gate-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle, #1a0000 0%, #000 100%);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            text-align: center;
-            padding: 20px;
         }
 
         .enter-btn {
-            background: transparent;
-            color: white;
-            border: 1px solid rgba(255,255,255,0.5);
-            padding: 15px 40px;
-            font-family: 'Permanent Marker';
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: 0.4s;
-            letter-spacing: 3px;
-            margin-top: 20px;
-            text-transform: uppercase;
+            background: transparent; color: white; border: 1px solid rgba(255,255,255,0.5);
+            padding: 15px 40px; font-family: 'Permanent Marker'; font-size: 1.2rem; cursor: pointer;
+            margin-top: 20px; text-transform: uppercase;
         }
 
-        .enter-btn:hover {
-            border-color: var(--neon-red);
-            color: var(--neon-red);
-            box-shadow: 0 0 20px rgba(179, 0, 0, 0.4);
-        }
-
-        /* --- COUNTDOWN --- */
+        /* --- COUNTDOWN (Fix Height agar tidak goyang) --- */
         .countdown-container {
-            display: flex; 
-            gap: 8px; 
-            margin-bottom: 25px;
-            font-family: 'Permanent Marker', sans-serif;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: flex; gap: 10px; margin-bottom: 25px; justify-content: center; flex-wrap: wrap;
         }
-
         .count-item {
-            background: rgba(0, 0, 0, 0.6); 
-            padding: 10px; 
-            border-radius: 8px;
-            min-width: 65px; 
-            text-align: center; 
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.6); padding: 10px; border-radius: 8px;
+            min-width: 60px; height: 70px; /* Lock height agar stabil */
+            border: 1px solid var(--glass-border); backdrop-filter: blur(10px);
         }
+        .count-item span { display: block; font-size: 1.5rem; color: var(--neon-red); }
 
-        .count-item span { display: block; font-size: 1.6rem; color: var(--neon-red); text-shadow: 0 0 10px rgba(179,0,0,0.5); }
-
-        /* --- FIXED ELEMENTS --- */
-        .music-player, .contact-admin {
-            position: fixed; 
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border); 
-            padding: 8px 18px;
-            border-radius: 50px; 
-            display: flex; 
-            align-items: center;
-            gap: 12px; 
-            backdrop-filter: blur(15px); 
-            z-index: 1000;
-            transition: 0.3s;
-        }
-
-        .music-player { bottom: 20px; left: 15px; }
-        .contact-admin { bottom: 20px; right: 15px; text-decoration: none; color: white; }
-        .contact-admin:hover { border-color: #25D366; transform: translateY(-3px); }
-
-        .visualizer { display: flex; align-items: flex-end; gap: 3px; height: 16px; }
-        .bar { width: 3px; background: var(--neon-red); height: 4px; }
-        .playing .bar { animation: bounce 0.6s infinite ease-in-out; }
-        @keyframes bounce { 0%, 100% { height: 4px; } 50% { height: 16px; } }
-
-        .main-content { opacity: 0; transition: 2s; text-align: center; width: 100%; padding: 20px 0; }
-        .a7x-logo { font-family: 'Creepster'; font-size: clamp(2.2rem, 10vw, 4rem); color: #fff; text-shadow: 0 0 15px var(--neon-red); margin: 0; letter-spacing: 3px; }
+        /* --- BOX & CONTENT --- */
+        .main-content { opacity: 0; transition: 1.5s; width: 100%; padding: 20px 0; }
+        .a7x-logo { font-family: 'Creepster'; font-size: clamp(2rem, 10vw, 3.5rem); text-shadow: 0 0 15px var(--neon-red); margin: 0; }
         
         .marquee-container {
-            width: 100%; background: rgba(179,0,0,0.05); margin: 20px 0; padding: 12px 0; 
+            width: 100%; background: rgba(179,0,0,0.05); margin: 15px 0; padding: 10px 0; 
             overflow: hidden; border-top: 1px solid rgba(179,0,0,0.3); border-bottom: 1px solid rgba(179,0,0,0.3);
         }
-        .marquee-text { display: inline-block; white-space: nowrap; animation: marquee 20s linear infinite; font-size: 0.85rem; letter-spacing: 2px; }
+        .marquee-text { display: inline-block; white-space: nowrap; animation: marquee 20s linear infinite; font-size: 0.8rem; }
 
         .box {
-            background: var(--glass-bg); 
-            padding: 30px; 
-            border-radius: 24px;
-            border: 1px solid var(--glass-border); 
-            width: 85%; 
-            max-width: 360px;
-            margin: 0 auto; 
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background: var(--glass-bg); padding: 25px; border-radius: 20px;
+            border: 1px solid var(--glass-border); width: 85%; max-width: 340px;
+            margin: 0 auto; backdrop-filter: blur(20px);
         }
 
         input {
-            width: 100%; padding: 14px; border-radius: 10px; border: 1px solid #222;
+            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #222;
             background: #050505; color: white; text-align: center; margin-bottom: 15px; box-sizing: border-box;
-            font-family: sans-serif; outline: none; transition: 0.3s;
         }
-        input:focus { border-color: var(--neon-red); box-shadow: 0 0 10px rgba(179,0,0,0.2); }
 
         .check-btn {
-            width: 100%; padding: 14px; background: var(--neon-red); color: white;
-            border: none; border-radius: 10px; cursor: pointer;
-            font-family: 'Permanent Marker'; font-size: 1.1rem; transition: 0.3s;
+            width: 100%; padding: 12px; background: var(--neon-red); color: white;
+            border: none; border-radius: 8px; cursor: pointer; font-family: 'Permanent Marker';
         }
-        .check-btn:hover { background: #d40000; transform: scale(1.02); }
+
+        /* --- FLOAT ELEMENTS --- */
+        .music-player, .contact-admin {
+            position: fixed; background: var(--glass-bg); padding: 8px 15px; border-radius: 50px; 
+            display: flex; align-items: center; gap: 10px; z-index: 1000; font-size: 0.8rem;
+        }
+        .music-player { bottom: 15px; left: 10px; }
+        .contact-admin { bottom: 15px; right: 10px; text-decoration: none; color: white; }
+
+        .visualizer { display: flex; align-items: flex-end; gap: 2px; height: 12px; }
+        .bar { width: 3px; background: var(--neon-red); height: 4px; }
+        .playing .bar { animation: bounce 0.6s infinite ease-in-out; }
+        @keyframes bounce { 0%, 100% { height: 4px; } 50% { height: 12px; } }
 
         /* --- MODAL --- */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.92); display: none; justify-content: center;
-            align-items: center; z-index: 2000; backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.92); display: none; justify-content: center; align-items: center; z-index: 2000;
         }
-
         .modal-content { 
-            background: #000; border: 1px solid white; padding: 40px; border-radius: 25px; 
-            text-align: center; transform: scale(0.8); transition: 0.4s; 
-            width: 85%; max-width: 380px;
-            animation: pulse-border 2s infinite;
+            background: #000; border: 1px solid white; padding: 30px; border-radius: 20px; 
+            text-align: center; width: 80%; max-width: 300px; animation: pulse-border 2s infinite;
         }
 
-        @media (min-width: 768px) {
-            .countdown-container { gap: 15px; }
-            .count-item { min-width: 85px; padding: 15px; }
-            .count-item span { font-size: 2.2rem; }
-            .music-player { left: 30px; bottom: 30px; }
-            .contact-admin { right: 30px; bottom: 30px; }
-        }
-
-        @keyframes pulse-border {
-            0% { box-shadow: 0 0 15px rgba(255,255,255,0.1); }
-            50% { box-shadow: 0 0 35px var(--border-glow, #fff); }
-            100% { box-shadow: 0 0 15px rgba(255,255,255,0.1); }
-        }
         @keyframes marquee { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+        @keyframes pulse-border { 50% { box-shadow: 0 0 25px var(--border-glow, #fff); } }
     </style>
 </head>
 <body>
 
-    <div class="bat" style="animation-duration: 9s; animation-delay: 0s;">🦇</div>
-    <div class="bat" style="animation-duration: 13s; animation-delay: 4s;">🦇</div>
+    <div class="bat" style="animation-duration: 10s;">🦇</div>
+    <div class="bat" style="animation-duration: 15s; animation-delay: 5s;">🦇</div>
 
     <div id="gate-screen">
-        <h2 style="font-family:Creepster; color:white; font-size:3rem; text-shadow:0 0 20px var(--neon-red); letter-spacing: 5px;">ARE YOU READY?</h2>
+        <h2 style="font-family:Creepster; color:white; font-size:2.5rem; text-shadow:0 0 20px var(--neon-red);">ARE YOU READY?</h2>
         <button class="enter-btn" onclick="enterSite()">ENTER THE PIT</button>
     </div>
 
     <div class="music-player" id="player-ui">
         <div class="visualizer" id="viz">
-            <div class="bar" style="animation-delay: 0.1s"></div>
-            <div class="bar" style="animation-delay: 0.3s"></div>
-            <div class="bar" style="animation-delay: 0.2s"></div>
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div>
         </div>
-        <div style="font-size: 0.65rem; font-family: sans-serif;">
-            <b id="song-title" style="display:block; letter-spacing: 1px; text-transform: uppercase;">A7X - Loading...</b>
-            <span id="status" style="color: #888;">PLAYING</span>
+        <div style="font-size: 0.6rem;">
+            <b id="song-title">A7X - LOADING...</b>
         </div>
-        <button id="music-btn" style="background:none; border:none; color:white; cursor:pointer; font-size: 1.2rem;" onclick="toggleMusic()">⏸</button>
+        <button id="music-btn" style="background:none; border:none; color:white; cursor:pointer;" onclick="toggleMusic()">⏸</button>
     </div>
 
     <a href="https://wa.me/62812345678" target="_blank" class="contact-admin">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        <b style="font-family: sans-serif; font-size: 0.8rem; letter-spacing: 1px; margin-left:5px;">ADMIN</b>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <b style="font-family: sans-serif; margin-left:5px;">ADMIN</b>
     </a>
 
     <div class="main-content" id="main-content">
         <h1 class="a7x-logo">AVENGED SEVENFOLD</h1>
-        <div style="font-family:'Permanent Marker'; color:#888; font-size: 1rem; letter-spacing: 2px;">Live Jakarta International Stadium</div>
+        <div style="font-family:'Permanent Marker'; color:#888; font-size: 0.9rem;">Live Jakarta International Stadium</div>
 
         <div class="countdown-container">
             <div class="count-item"><span id="days">00</span><small>DAYS</small></div>
@@ -242,7 +168,7 @@
 
         <div class="marquee-container">
             <div class="marquee-text">
-                💀 VALIDASI TICKET <span style="color:var(--neon-red)">FESTIVAL B</span> 💀 AVENGED SEVENFOLD LIVE IN JAKARTA 2026 💀 OFFICIAL VALIDATION SYSTEM 💀
+                💀 VALIDASI TICKET <span style="color:var(--neon-red)">FESTIVAL B</span> 💀 OFFICIAL VALIDATION SYSTEM 💀 AVENGED SEVENFOLD LIVE 2026 💀
             </div>
         </div>
 
@@ -255,7 +181,7 @@
     <div class="modal" id="modal">
         <div class="modal-content" id="modal-content">
             <div id="modal-text"></div>
-            <button class="enter-btn" style="font-size: 0.9rem; padding: 10px 30px;" onclick="closeModal()">CLOSE</button>
+            <button class="enter-btn" style="font-size: 0.8rem;" onclick="closeModal()">CLOSE</button>
         </div>
     </div>
 
@@ -278,12 +204,11 @@
             const song = playlist[randomIndex];
             audio.src = song.src;
             document.getElementById('song-title').innerText = `A7X - ${song.title}`;
-            audio.play().catch(e => console.log("Playback blocked by browser"));
+            audio.play().catch(e => console.log("Blocked"));
         }
 
         audio.onended = () => shuffleAndPlay();
 
-        // Countdown Logic
         const concertDate = new Date("Oct 10, 2026 20:00:00").getTime();
         setInterval(function() {
             const now = new Date().getTime();
@@ -300,19 +225,17 @@
             setTimeout(() => {
                 document.getElementById('gate-screen').style.display = 'none';
                 document.getElementById('main-content').style.opacity = '1';
-            }, 1500);
+            }, 1000);
             shuffleAndPlay();
             viz.classList.add('playing');
         }
 
         function toggleMusic() {
-            if (audio.paused) { audio.play(); updateUI(true); } 
-            else { audio.pause(); updateUI(false); }
+            if (audio.paused) { audio.play(); updateUI(true); } else { audio.pause(); updateUI(false); }
         }
 
         function updateUI(p) {
             document.getElementById('music-btn').innerText = p ? "⏸" : "▶";
-            document.getElementById('status').innerText = p ? "PLAYING" : "PAUSED";
             p ? viz.classList.add('playing') : viz.classList.remove('playing');
         }
 
@@ -323,9 +246,7 @@
                 const r = await fetch(`https://iot.anons.biz.id/api/check/${wa}`);
                 const d = await r.json();
                 showResult(d.valid, d.nama);
-            } catch (e) {
-                alert("Server Error. Hubungi Admin.");
-            }
+            } catch (e) { alert("Server Error."); }
         }
 
         function showResult(v, n) {
@@ -333,21 +254,15 @@
             const c = document.getElementById('modal-content');
             m.style.display = 'flex';
             if(v) {
-                c.style.borderColor = "#4ade80";
-                c.style.setProperty('--border-glow', '#4ade80');
-                document.getElementById('modal-text').innerHTML = `<h1 style="color:#4ade80; font-family:Creepster; font-size:2.5rem;">🤘 VALID 🤘</h1><p>WELCOME TO THE FAMILY,<br><b style="font-size:1.4rem">${n}</b></p><p style="color:#888">SECTION: FESTIVAL B</p>`;
+                c.style.borderColor = "#4ade80"; c.style.setProperty('--border-glow', '#4ade80');
+                document.getElementById('modal-text').innerHTML = `<h1 style="color:#4ade80; font-family:Creepster;">🤘 VALID 🤘</h1><p>WELCOME, ${n}!</p>`;
             } else {
-                c.style.borderColor = "#b30000";
-                c.style.setProperty('--border-glow', '#b30000');
-                document.getElementById('modal-text').innerHTML = `<h1 style="color:#b30000; font-family:Creepster; font-size:2.5rem;">💀 DENIED 💀</h1><p>DATA TIDAK DITEMUKAN!</p><p style="font-size:0.8rem; color:#666">Silakan konfirmasi ke admin.</p>`;
+                c.style.borderColor = "#b30000"; c.style.setProperty('--border-glow', '#b30000');
+                document.getElementById('modal-text').innerHTML = `<h1 style="color:#b30000; font-family:Creepster;">💀 DENIED 💀</h1><p>TIDAK DITEMUKAN!</p>`;
             }
-            setTimeout(() => { c.style.transform = "scale(1)"; }, 10);
         }
 
-        function closeModal() { 
-            document.getElementById('modal').style.display = 'none'; 
-            document.getElementById('modal-content').style.transform = "scale(0.8)";
-        }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
     </script>
 </body>
 </html>
